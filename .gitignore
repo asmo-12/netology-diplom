@@ -33,8 +33,4 @@ override.tf.json
 diplom-netology.code-workspace
 backet.tar.gz
 const.txt
-<<<<<<< HEAD
 .vault_pass
-=======
-ansible/roles/alertmanager/defaults/secret.yml
->>>>>>> a37234d3ebb32e178543625fed37a80717d108f5
