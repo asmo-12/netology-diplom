@@ -1,4 +1,8 @@
 ---
+- name: Include vars of vault.yml
+  include_vars:
+    file: vault.yml
+
 - name: copy amtool config
   template:
     force: true

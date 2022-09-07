@@ -33,7 +33,7 @@ alertmanager_smtp: {}
 #   require_tls: "True"
 
 # Default values you can see here -> https://prometheus.io/docs/alerting/configuration/
-# alertmanager_slack_api_url: ''
+alertmanager_slack_api_url: "{{ vault_alertmanager_slack_api_url }}"
 alertmanager_pagerduty_url: ''
 alertmanager_opsgenie_api_key: ''
 alertmanager_opsgenie_api_url: ''
