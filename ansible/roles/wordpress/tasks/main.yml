@@ -1,0 +1,96 @@
+---
+# tasks file for wordpress
+# - name: Update apt cache
+#   apt: update_cache=yes cache_valid_time=3600
+
+# - name: Install prerequisites
+#   apt: name=aptitude update_cache=yes state=latest force_apt_get=yes
+
+- name: Update apt packages
+  apt:
+    update_cache: true
+    cache_valid_time: 86400 # One day
+
+- name: Install LAMP Packages
+  apt:
+    name: "{{ item }}"
+    update_cache: false
+    cache_valid_time: 3600
+    state: present
+  loop: "{{ lamp_modules }}"
+
+- name: Install PHP Extensions
+  apt:
+    name: "{{ item }}"
+    update_cache: false
+    state: present
+  loop: "{{ php_modules }}"
+
+# Apache Configuration
+- name: Create document root
+  file:
+    path: "/var/www/{{ http_host }}"
+    state: directory
+    owner: "www-data"
+    group: "www-data"
+    mode: '0755'
+
+- name: Set up Apache VirtualHost
+  template:
+    src: "templates/apache.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ http_conf }}"
+    mode: 0644
+  notify: reload apache
+
+- name: Enable rewrite module
+  shell: /usr/sbin/a2enmod rewrite
+  notify: reload apache
+
+- name: Enable new site
+  shell: /usr/sbin/a2ensite {{ http_conf }}
+  notify: reload apache
+
+- name: Disable default Apache site
+  shell: /usr/sbin/a2dissite 000-default.conf
+  notify: restart apache
+
+# UFW Configuration
+- name: "UFW - Allow HTTP on port {{ http_port }}"
+  ufw:
+    rule: allow
+    port: "{{ http_port }}"
+    proto: tcp
+
+# WordPress Configuration
+- name: Download and unpack latest WordPress
+  unarchive:
+    src: https://wordpress.org/latest.tar.gz
+    dest: "/var/www/{{ http_host }}"
+    remote_src: true
+    creates: "/var/www/{{ http_host }}/wordpress"
+
+- name: Set up wp-config
+  template:
+    src: "templates/wp-config.php.j2"
+    dest: "/var/www/{{ http_host }}/wordpress/wp-config.php"
+    mode: 0644
+
+- name: Set ownership
+  file:
+    path: "/var/www/{{ http_host }}"
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+
+- name: Set permissions for directories
+  file:
+    path: "/var/www/{{ http_host }}/wordpress/"
+    mode: u=rwX,g=rX,o=rX
+    recurse: true
+
+# - name: Set permissions for directories
+#   shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type d -exec chmod 750 {} \\;"
+
+# - name: Set permissions for files
+#   shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type f -exec chmod 644 {} \\;"

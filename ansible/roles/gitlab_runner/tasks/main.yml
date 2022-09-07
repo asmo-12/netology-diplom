@@ -1,0 +1,76 @@
+---
+# tasks file for gitlab_runner
+
+- name: import assert.yml
+  import_tasks: assert.yml
+  run_once: true
+  delegate_to: localhost
+
+- name: Update apt cache for other tasks
+  apt:
+    update_cache: true
+    cache_valid_time: 81600
+
+- name: install requirements
+  package:
+    name: "{{ gitlab_runner_requirements }}"
+    state: present
+
+- name: get repository installation script
+  get_url:
+    url: "{{ gitlab_runner_script_url }}"
+    dest: /tmp/gitlab-runner-script.sh
+    mode: "750"
+
+- name: run repository installation script
+  command:
+    cmd: /tmp/gitlab-runner-script.sh
+    creates: "{{ gitlab_runner_repository_file }}"
+
+- name: install gitlab-runner
+  package:
+    name: "{{ gitlab_runner_package }}"
+    state: present
+    allow_downgrade: true
+
+- name: register runner
+  block:
+    - name: get registration status
+      command:
+        cmd: gitlab-runner list
+      register: gitlab_runner_get_registration_status
+      changed_when: false
+
+    - name: .crt exist ?
+      stat:
+        path: /etc/gitlab-runner/certs/{{ gitlab_domain }}.crt
+      register: crt
+
+    - name: copy cert
+      command: >
+        openssl s_client -showcerts -connect {{ gitlab_domain }}:443
+        -servername {{ gitlab_domain }} < /dev/null 2>/dev/null | openssl x509
+        -outform PEM > /etc/gitlab-runner/certs/{{ gitlab_domain }}.crt
+      when: not crt.stat.exists
+
+    - name: register gitlab runner
+      command:
+        cmd: >
+          gitlab-runner register --non-interactive
+          --name "{{ gitlab_runner_name }}"
+          --url "{{ gitlab_runner_url }}"
+          --registration-token "{{ gitlab_runner_token }}"
+          --tag-list "{{ gitlab_runner_tags | join(',') }}"
+          --executor "{{ gitlab_runner_executor }}"
+          --docker-image "{{ gitlab_runner_docker_image }}"
+          --locked="false"
+      when:
+        - gitlab_runner_name not in gitlab_runner_get_registration_status.stderr
+  when:
+    - gitlab_runner_token is defined
+
+- name: start and enable gitlab-runner
+  service:
+    name: gitlab-runner
+    state: started
+    enabled: true

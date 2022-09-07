@@ -1,0 +1,65 @@
+---
+- hosts: proxy
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  roles:
+  - nginx_revproxy
+  - node_exporter
+  - for_test
+
+- hosts: db01
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  roles:
+  - mysql
+  - node_exporter
+  - for_test
+
+- hosts: db02
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  roles:
+  - mysql
+  - node_exporter
+  - for_test
+
+- hosts: app
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  roles:
+  - wordpress
+  - node_exporter
+  - for_test
+
+- hosts: gitlab
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  roles:
+  - gitlab
+  - node_exporter
+  - for_test
+
+- hosts: runner
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  roles:
+  - gitlab_runner
+  - node_exporter
+  - for_test
+
+- hosts: monitoring
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  roles:
+  - prometheus
+  - alertmanager
+  - node_exporter
+  - grafana
+  - for_test

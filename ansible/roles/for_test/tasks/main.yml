@@ -1,0 +1,12 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: true
+    cache_valid_time: 81600
+
+- name: Install tools
+  apt:
+    name: "{{ item }}"
+    update_cache: false
+    state: present
+  loop: "{{ only_for_testing_packages }}"

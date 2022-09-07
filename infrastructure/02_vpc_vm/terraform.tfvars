@@ -1,0 +1,1 @@
+/home/asmo/repos/netology-diplom/infrastructure/terraform.tfvars
