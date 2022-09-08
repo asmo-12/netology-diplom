@@ -34,6 +34,7 @@
   template:
     src: "{{ grafana_yum_repo_template }}"
     dest: "/etc/yum.repos.d/{{ grafana_yum_repo_template | basename | regex_replace('\\.j2$', '') }}"
+    mode: 0644
     force: true
     backup: true
   when: ansible_pkg_mgr in ['yum', 'dnf']
