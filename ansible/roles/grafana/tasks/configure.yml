@@ -23,20 +23,75 @@
     group: grafana
     mode: 0644
   no_log: true
+
+# - block:
+#   - name: Get stats of the SSL certificate
+#     stat:
+#       path: grafana.key
+#     register: p
+#   - name: Create an SSL certificate
+#     command: "openssl genrsa -out grafana.key 2048"
+#     when: p.stat.exist is defined and p.stat.size > 0
+
+#   - name: Get stats of certificate signing request
+#     stat:
+#       path: grafana.csr
+#     register: p
+#   - name: Generate a certificate signing request
+#     command: "openssl req -new -key grafana.key -out grafana.csr"
+#     when: p.stat.exist is defined and p.stat.size > 0
+
+#   - name: Get stats of crt
+#     stat:
+#       path: grafana.crt
+#     register: p
+#   - name: Output the certificate
+#     command: "openssl x509 -req -days 365 -in grafana.csr -signkey grafana.key -out grafana.crt"
+#     when: p.stat.exist is defined and p.stat.size > 0
+
+- name: Get stats of the SSL certificate
+  stat:
+    path: "{{ cert_file }}"
+  register: crt
+- name: Get stats of certificate signing request
+  stat:
+    path: "{{ cert_key }}"
+  register: key
+
+- name: Create self-signed certificate.
+  command: >
+    openssl req -new -nodes -sha512 -x509 -subj "{{ grafana_self_signed_cert_subj }}"
+    -addext "subjectAltName = DNS:{{ ansible_fqdn }},IP:{{ ansible_host }}"
+    -days 3650 -keyout {{ cert_key }} -out {{ cert_file }}
+    -extensions v3_ca
+    creates={{ cert_file }}
+  when: grafana_create_self_signed_cert and (! crt.stat.exist or ! key.stat.exist)
+
+- name: Set certificate key file mode and ownership
+  file:
+    path: "{{ item }}"
+    owner: grafana
+    group: grafana
+    mode: 0400
+  with_items:
+    - "{{ cert_file }}"
+    - "{{ cert_key }}"
+  when: (key.stat.mode <> 0400 or crt.stat.mode <> 0400) or (key.stat.gr_name <> 'grafana' or crt.stat.gr_name <> 'grafana') or (key.stat.pw_name <> 'grafana' or crt.stat.pw_name <> 'grafana')
   notify: restart grafana
 
-- name: Create grafana LDAP configuration file
-  template:
-    src: ldap.toml.j2
-    dest: "{{ grafana_auth.ldap.config_file | default('/etc/grafana/ldap.toml') }}"
-    owner: root
-    group: grafana
-    mode: 0644
-  when:
-    - "'ldap' in grafana_auth"
-    - "'enabled' not in grafana_auth.ldap or grafana_auth.ldap.enabled"
-  no_log: true
-  notify: restart grafana
+
+# - name: Create grafana LDAP configuration file
+#   template:
+#     src: ldap.toml.j2
+#     dest: "{{ grafana_auth.ldap.config_file | default('/etc/grafana/ldap.toml') }}"
+#     owner: root
+#     group: grafana
+#     mode: 0644
+#   when:
+#     - "'ldap' in grafana_auth"
+#     - "'enabled' not in grafana_auth.ldap or grafana_auth.ldap.enabled"
+#   no_log: true
+#   notify: restart grafana
 
 - name: Create grafana directories
   file:

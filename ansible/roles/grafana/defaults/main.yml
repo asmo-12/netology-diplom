@@ -21,22 +21,26 @@ grafana_port: 3000
 grafana_cap_net_bind_service: false
 
 # External Grafana address. Variable maps to "root_url" in grafana server section
-grafana_url: "http://{{ grafana_address }}:{{ grafana_port }}"
+grafana_url: "https://{{ grafana_address }}:{{ grafana_port }}"
 grafana_api_url: "{{ grafana_url }}"
 grafana_domain: "{{ ansible_fqdn | default(ansible_host) | default('localhost') }}"
 
 # Additional options for grafana "server" section
 # This section WILL omit options for: http_addr, http_port, domain, and root_url, as those settings are set by variables listed before
 grafana_server:
-  protocol: http
+  protocol: https
   enforce_domain: false
   socket: ""
-  cert_key: ""
-  cert_file: ""
+  cert_key: "/etc/grafana/{{ ansible_fqdn }}.key"
+  cert_file: "/etc/grafana/{{ ansible_fqdn }}.crt"
   enable_gzip: false
   static_root_path: public
   router_logging: false
   serve_from_sub_path: false
+
+# SSL Configuration.
+grafana_self_signed_cert_subj: "/C=RU/ST=Ural/L=Chelyabinsk/O=IT/CN={{ ansible_fqdn }}"
+grafana_create_self_signed_cert: true
 
 # Variables correspond to ones in grafana.ini configuration file
 # Security
