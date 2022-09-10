@@ -37,13 +37,14 @@ nginx_revproxy_sites:                                         # List of sites to
     letsencrypt_email: "asmo12@gmail.com"                                     # Set email for letencrypt cert
     client_max_body_size: "2048M"
     proxy_read_timeout: "360"
+    backend_protocol: http
 
   gitlab.netology.simonof.info:
     domains:                                                  # List of server_name aliases
       - gitlab.netology.simonof.info
     upstreams:
       - { backend_address: 10.0.1.19, backend_port: 443 }
-    listen: 80
+    # listen: 80
     listen_ssl: 443
     ssl: true                                                 # Set to True if you want to redirect http to https
     hsts_max_age: 63072000                                    # Set HSTS header with max-age defined
@@ -58,6 +59,7 @@ nginx_revproxy_sites:                                         # List of sites to
       - grafana.netology.simonof.info
     upstreams:
       - { backend_address: 10.0.1.21, backend_port: 3000 }
+    listen_ssl: 443
     ssl: true                                                 # Set to True if you want to redirect http to https
     hsts_max_age: 63072000                                    # Set HSTS header with max-age defined
     letsencrypt: true
@@ -71,6 +73,7 @@ nginx_revproxy_sites:                                         # List of sites to
       - prometheus.netology.simonof.info
     upstreams:
       - { backend_address: 10.0.1.21, backend_port: 9090 }
+    listen_ssl: 443
     ssl: true                                                 # Set to True if you want to redirect http to https
     hsts_max_age: 63072000                                    # Set HSTS header with max-age defined
     letsencrypt: true
@@ -84,6 +87,7 @@ nginx_revproxy_sites:                                         # List of sites to
       - alertmanager.netology.simonof.info
     upstreams:
       - { backend_address: 10.0.1.21, backend_port: 9093 }
+    listen_ssl: 443
     ssl: true                                                 # Set to True if you want to redirect http to https
     hsts_max_age: 63072000                                    # Set HSTS header with max-age defined
     letsencrypt: true

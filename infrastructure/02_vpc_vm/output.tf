@@ -36,13 +36,6 @@
 #   ])
 #   sensitive = false
 # } 
-output "proxy_name" {
-  value     = yandex_compute_instance.proxy.name
-  sensitive = false
-}
-data "yandex_compute_instance" "proxy" {
-  instance_id = yandex_compute_instance.proxy.id
-}
 # output "proxy_external_ip" {
 #   value = data.yandex_compute_instance.proxy.network_interface.0.nat_ip_address
 # }
@@ -54,4 +47,11 @@ data "yandex_compute_instance" "proxy" {
 # }
 output "proxy_fqdn" {
   value = data.yandex_compute_instance.proxy.fqdn
+}
+output "proxy_name" {
+  value     = yandex_compute_instance.proxy.name
+  sensitive = false
+}
+data "yandex_compute_instance" "proxy" {
+  instance_id = yandex_compute_instance.proxy.id
 }

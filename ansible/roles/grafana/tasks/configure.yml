@@ -49,23 +49,23 @@
 #     command: "openssl x509 -req -days 365 -in grafana.csr -signkey grafana.key -out grafana.crt"
 #     when: p.stat.exist is defined and p.stat.size > 0
 
+- name: Get stats of private key
+  stat:
+    path: "{{ grafana_server.cert_key }}"
+  register: key
 - name: Get stats of the SSL certificate
   stat:
-    path: "{{ cert_file }}"
+    path: "{{ grafana_server.cert_file }}"
   register: crt
-- name: Get stats of certificate signing request
-  stat:
-    path: "{{ cert_key }}"
-  register: key
 
 - name: Create self-signed certificate.
   command: >
     openssl req -new -nodes -sha512 -x509 -subj "{{ grafana_self_signed_cert_subj }}"
     -addext "subjectAltName = DNS:{{ ansible_fqdn }},IP:{{ ansible_host }}"
-    -days 3650 -keyout {{ cert_key }} -out {{ cert_file }}
+    -days 3650 -keyout {{ grafana_server.cert_key }} -out {{ grafana_server.cert_file }}
     -extensions v3_ca
-    creates={{ cert_file }}
-  when: grafana_create_self_signed_cert and (! crt.stat.exist or ! key.stat.exist)
+    creates={{ grafana_server.cert_file }}
+  when: grafana_create_self_signed_cert # and (! crt.stat.exist or ! key.stat.exist)
 
 - name: Set certificate key file mode and ownership
   file:
@@ -74,11 +74,11 @@
     group: grafana
     mode: 0400
   with_items:
-    - "{{ cert_file }}"
-    - "{{ cert_key }}"
-  when: (key.stat.mode <> 0400 or crt.stat.mode <> 0400) or (key.stat.gr_name <> 'grafana' or crt.stat.gr_name <> 'grafana') or (key.stat.pw_name <> 'grafana' or crt.stat.pw_name <> 'grafana')
-  notify: restart grafana
+    - "{{ grafana_server.cert_file }}"
+    - "{{ grafana_server.cert_key }}"
+  # when: key.stat.mode != 0400 or key.stat.gr_name != 'grafana' or key.stat.pw_name != 'grafana' or crt.stat.mode != 0400 or crt.stat.gr_name != 'grafana' or crt.stat.pw_name != "grafana"
 
+  notify: restart grafana
 
 # - name: Create grafana LDAP configuration file
 #   template:
@@ -106,25 +106,25 @@
     - "{{ grafana_data_dir }}/dashboards"
     - "{{ grafana_data_dir }}/plugins"
 
-- block:
-    - name: Create grafana socket directory
-      file:
-        path: "{{ grafana_server.socket | dirname }}"
-        state: directory
-        mode: 0775
-        owner: "grafana"
-        group: "grafana"
+# - block:
+#     - name: Create grafana socket directory
+#       file:
+#         path: "{{ grafana_server.socket | dirname }}"
+#         state: directory
+#         mode: 0775
+#         owner: "grafana"
+#         group: "grafana"
 
-    - name: Ensure grafana socket directory created on startup
-      template:
-        src: tmpfiles.j2
-        dest: /etc/tmpfiles.d/grafana.conf
-        owner: root
-        group: root
-        mode: 0644
-  when:
-    - grafana_server.protocol is defined and grafana_server.protocol == 'socket'
-    - grafana_server.socket | dirname != '/var/run'
+#     - name: Ensure grafana socket directory created on startup
+#       template:
+#         src: tmpfiles.j2
+#         dest: /etc/tmpfiles.d/grafana.conf
+#         owner: root
+#         group: root
+#         mode: 0644
+#   when:
+#     - grafana_server.protocol is defined and grafana_server.protocol == 'socket'
+#     - grafana_server.socket | dirname != '/var/run'
 
 - name: Enable grafana to ports lower than port 1024
   capabilities:
@@ -135,6 +135,14 @@
     - grafana_port | int <= 1024
     - grafana_cap_net_bind_service
 
+- name: Set /etc/grafana/grafana.ini mode and ownership # Позже почему-то возникает ошибка доступа к /etc/grafana/grafana.ini,
+# из-за которой не рестартует сервис. Даже при 0664 !!! Поэтому сначала дам максимальные права, а в конце заберу.
+  file:
+    path: "/etc/grafana/grafana.ini"
+    owner: grafana
+    group: grafana
+    mode: 0777
+  
 - name: Enable and start Grafana systemd unit
   systemd:
     name: grafana-server
