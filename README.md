@@ -327,7 +327,7 @@ https://i.imgur.com/r3LPpov.png
   - укажу хранилище через vars_files директиву в плейбуке 
   - появится возможность деплоить сертификаты через `ansible.builtin.copy` - `content:`.
   
-
+Prometheus: "Prometheus supports basic authentication and TLS. This is **experimental** and might change in the future." ( https://prometheus.io/docs/prometheus/latest/configuration/https/ ). Ладно, все равно будем переводить на https...
 >В вашей доменной зоне настроены A-записи на внешний адрес reverse proxy:
 >• https://grafana.you.domain (Grafana)
 >• https://prometheus.you.domain (Prometheus)

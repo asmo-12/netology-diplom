@@ -138,7 +138,8 @@
 - name: Set /etc/grafana/grafana.ini mode and ownership # Позже почему-то возникает ошибка доступа к /etc/grafana/grafana.ini,
 # из-за которой не рестартует сервис. Даже при 0664 !!! Поэтому сначала дам максимальные права, а в конце заберу.
   file:
-    path: "/etc/grafana/grafana.ini"
+    path: "/etc/grafana"
+    recurse: true
     owner: grafana
     group: grafana
     mode: 0777
