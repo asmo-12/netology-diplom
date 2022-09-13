@@ -200,16 +200,18 @@ grafana_plugins: []
 #  - raintank-worldping-app
 
 # Dashboards from https://grafana.com/dashboards
-grafana_dashboards: []
-#  - dashboard_id: '4271'
-#    revision_id: '3'
-#    datasource: 'Prometheus'
-#  - dashboard_id: '1860'
-#    revision_id: '4'
-#    datasource: 'Prometheus'
-#  - dashboard_id: '358'
-#    revision_id: '1'
-#    datasource: 'Prometheus'
+grafana_dashboards:
+  - dashboard_id: "3662"
+    revision_id: "2"
+    datasource: "Prometheus"
+  - dashboard_id: "12486"
+    revision_id: "2"
+    datasource: "Prometheus"
+  - dashboard_id: "8010"
+    revision_id: "1"
+    datasource: "Prometheus"
+    # datasource: "Prometheus AlertManager"
+
 
 grafana_dashboards_dir: "dashboards"
 
@@ -223,19 +225,19 @@ grafana_alert_notifications: []
 #      addresses: "example@example.com"
 
 # Datasources to configure
-grafana_datasources: []
-#  - name: "Prometheus"
-#    type: "prometheus"
-#    access: "proxy"
-#    url: "http://prometheus.mydomain"
-#    basicAuth: true
-#    basicAuthUser: "admin"
-#    basicAuthPassword: "password"
-#    isDefault: true
-#    jsonData:
-#      tlsAuth: false
-#      tlsAuthWithCACert: false
-#      tlsSkipVerify: true
+grafana_datasources:
+  - name: "Prometheus"
+    type: "prometheus"
+    access: "proxy"
+    url: "https://localhost:9090"
+    basicAuth: false
+  #  basicAuthUser: "admin"
+  #  basicAuthPassword: "password"
+    isDefault: true
+    jsonData:
+      tlsAuth: false
+      tlsAuthWithCACert: false
+      tlsSkipVerify: true
 
 # API keys to configure
 grafana_api_keys: []
