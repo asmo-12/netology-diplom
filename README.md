@@ -327,7 +327,12 @@ https://i.imgur.com/r3LPpov.png
   - укажу хранилище через vars_files директиву в плейбуке 
   - появится возможность деплоить сертификаты через `ansible.builtin.copy` - `content:`.
   
-Prometheus: "Prometheus supports basic authentication and TLS. This is **experimental** and might change in the future." ( https://prometheus.io/docs/prometheus/latest/configuration/https/ ). Ладно, все равно будем переводить на https...
+Prometheus: "Prometheus supports basic authentication and TLS. This is **experimental** and might change in the future." ( https://prometheus.io/docs/prometheus/latest/configuration/https/ ). Ладно, сказано на https, значит на https...
+ C Prometheus, как и с многими другими теперь связана приключенческая история. Сначала он не хотел принимать в prometheus.service опцию `--web.config.file`, выяснилось, что в роли была прописана версия, которая ещё не умела работать по https.  Затем неуспехом заканчивалась проверка `promtool check config web.yml`, пока я таки не перечитал внимательно документацию и не понял, что надо указывать тип конфига, т.е. `promtool check web-config web.yml`.
+
+ Итак: Prometheus работает: https://i.vgy.me/fjKqlF.png 
+ Grafana связана с ним: https://i.vgy.me/ebuo8K.png
+
 >В вашей доменной зоне настроены A-записи на внешний адрес reverse proxy:
 >• https://grafana.you.domain (Grafana)
 >• https://prometheus.you.domain (Prometheus)

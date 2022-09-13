@@ -46,6 +46,30 @@
   notify:
     - reload prometheus
 
+- name: configure prometheus nodes
+  template:
+    src: "{{ prometheus_nodes_file }}"
+    dest: "{{ prometheus_config_dir }}/file_sd/node.yml"
+    force: true
+    owner: root
+    group: prometheus
+    mode: 0644
+  #   validate: "{{ _prometheus_binary_install_dir }}/promtool check web-config %s"
+  # notify:
+  #   - reload prometheus
+
+- name: configure prometheus web-config
+  template:
+    src: "{{ prometheus_web_config_file }}"
+    dest: "{{ prometheus_config_dir }}/web-config.yml"
+    force: true
+    owner: root
+    group: prometheus
+    mode: 0644
+    validate: "{{ _prometheus_binary_install_dir }}/promtool check web-config %s"
+  notify:
+    - reload prometheus
+
 - name: configure prometheus static targets
   copy:
     content: |

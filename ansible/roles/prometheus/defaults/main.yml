@@ -1,5 +1,5 @@
 ---
-prometheus_version: 2.22.0
+prometheus_version: 2.38.0
 prometheus_binary_local_dir: ''
 prometheus_skip_install: false
 
@@ -57,14 +57,17 @@ prometheus_external_labels:
   environment: "{{ ansible_fqdn | default(ansible_host) | default(inventory_hostname) }}"
 
 prometheus_targets: {}
-#  node:
-#    - targets:
-#        - localhost:9100
-#      labels:
-#        env: test
+  # node:
+  #   - targets:
+  #     - "localhost:9100"
+  # labels:
+  #   env: diplom
 
 prometheus_scrape_configs:
   - job_name: "prometheus"
+    scheme: https
+    tls_config:
+      ca_file: /etc/grafana/monitoring.netology.simonof.info.crt
     metrics_path: "{{ prometheus_metrics_path }}"
     static_configs:
       - targets:
@@ -76,6 +79,8 @@ prometheus_scrape_configs:
 
 # Alternative config file name, searched in ansible templates path.
 prometheus_config_file: 'prometheus.yml.j2'
+prometheus_web_config_file: 'web-config.yml.j2'
+prometheus_nodes_file: 'node.yml.j2'
 
 prometheus_alert_rules_files:
   - prometheus/rules/*.rules

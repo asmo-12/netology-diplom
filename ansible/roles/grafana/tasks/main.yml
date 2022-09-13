@@ -53,9 +53,9 @@
 - include: dashboards.yml
   when: grafana_dashboards | length > 0 or found_dashboards | length > 0
 
-- name: Set /etc/grafana/grafana.ini mode and ownership # Почему-то возникает ошибка доступа к /etc/grafana/grafana.ini
-# из-за которой не рестартует сервис. Даже при 0664 !!! Поэтому сначала давал максимальные права, а сейчас заберу.
-  file:
-    path: "/etc/grafana"
-    recurse: true
-    mode: 0664
+# - name: Set /etc/grafana/grafana.ini mode and ownership # Почему-то возникает ошибка доступа к /etc/grafana/grafana.ini
+# # из-за которой не рестартует сервис. Даже при 0664 !!! Поэтому сначала давал максимальные права, а сейчас заберу.
+#   file:
+#     path: "/etc/grafana"
+#     recurse: true
+#     mode: 0664

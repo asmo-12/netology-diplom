@@ -14,6 +14,7 @@ Group=prometheus
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStart={{ _prometheus_binary_install_dir }}/prometheus \
   --config.file={{ prometheus_config_dir }}/prometheus.yml \
+  --web.config.file={{ prometheus_config_dir }}/web-config.yml \
   --storage.tsdb.path={{ prometheus_db_dir }} \
 {% if prometheus_version is version('2.7.0', '>=') %}
   --storage.tsdb.retention.time={{ prometheus_storage_retention }} \
