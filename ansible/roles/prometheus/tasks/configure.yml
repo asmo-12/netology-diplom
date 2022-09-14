@@ -54,7 +54,7 @@
     owner: root
     group: prometheus
     mode: 0644
-  #   validate: "{{ _prometheus_binary_install_dir }}/promtool check web-config %s"
+  #   validate: "{{ _prometheus_binary_install_dir }}/promtool check config %s"
   # notify:
   #   - reload prometheus
 

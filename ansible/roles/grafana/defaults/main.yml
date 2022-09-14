@@ -203,15 +203,22 @@ grafana_plugins: []
 grafana_dashboards:
   - dashboard_id: "3662"
     revision_id: "2"
-    datasource: "Prometheus"
+    datasource: "Prometheus 1.0.0"
+  - dashboard_id: "1860"
+    revision_id: "27"
+    datasource: "Prometheus 1.0.0"
   - dashboard_id: "12486"
     revision_id: "2"
     datasource: "Prometheus"
   - dashboard_id: "8010"
     revision_id: "1"
-    datasource: "Prometheus"
-    # datasource: "Prometheus AlertManager"
-
+    datasource: "Prometheus AlertManager 0.0.6"
+  - dashboard_id: "9578"
+    revision_id: "4"
+    datasource: "Prometheus 1.0.0"
+  - dashboard_id: "2"
+    revision_id: "2"
+    datasource: "Prometheus 1.0.0"
 
 grafana_dashboards_dir: "dashboards"
 
