@@ -9,8 +9,6 @@
   changed_when: false
   check_mode: false
   register: __systemd_version
-  tags:
-    - skip_ansible_lint
 
 - name: Set systemd version fact
   set_fact:
