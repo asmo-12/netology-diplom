@@ -1,5 +1,5 @@
 resource "yandex_compute_instance" "proxy" {
-  name                      = "proxy"
+  name                      = var.proxy_name
   zone                      = var.region
   hostname                  = var.domain
   allow_stopping_for_update = false

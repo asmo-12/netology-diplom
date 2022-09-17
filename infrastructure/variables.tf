@@ -7,6 +7,7 @@ variable "nat_instance_image" { type = string }
 variable "ubuntu-image" { type = string }
 variable "platform_type" { type = string }
 variable "disk_type" { type = string }
+variable "proxy_name" { type = string } 
 variable "proxy_ip" { type = string }
 variable "my_subnets" {
   type = map(object({

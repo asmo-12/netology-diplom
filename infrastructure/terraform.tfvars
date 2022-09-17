@@ -13,24 +13,24 @@ my_subnets = {
   }
 }
 vms = {
-  # "app" = {
-  #   local_ip      = "10.0.1.16"
-  #   cores         = "2"
-  #   memory        = "4"
-  #   core_fraction = "5"
-  #   hdd           = "10"
-  #   name          = "app"
-  #   hostname      = "app.netology.simonof.info"
-  # }
-  # "db01" = {
-  #   local_ip      = "10.0.1.17"
-  #   cores         = "2"
-  #   memory        = "2"
-  #   core_fraction = "5"
-  #   hdd           = "10"
-  #   name          = "db01"
-  #   hostname      = "db01.netology.simonof.info"
-  # }
+  "app" = {
+    local_ip      = "10.0.1.16"
+    cores         = "2"
+    memory        = "4"
+    core_fraction = "5"
+    hdd           = "10"
+    name          = "app"
+    hostname      = "app.netology.simonof.info"
+  }
+  "db01" = {
+    local_ip      = "10.0.1.17"
+    cores         = "2"
+    memory        = "2"
+    core_fraction = "5"
+    hdd           = "10"
+    name          = "db01"
+    hostname      = "db01.netology.simonof.info"
+  }
   # "db02" = {
   #   local_ip      = "10.0.1.18"
   #   cores         = "2"
@@ -74,6 +74,7 @@ cloud_id                 = "b1gu7agfp9jcvjn9imcj"
 region                   = "ru-central1-a"
 public_ip                = "51.250.83.227"
 proxy_ip                 = "10.0.1.15"
+proxy_name               = "proxy"
 nat_instance_image       = "fd8q9r5va9p64uhch83k"
 ubuntu-image             = "fd8ju9iqf6g5bcq77jns"
 platform_type            = "standard-v2"

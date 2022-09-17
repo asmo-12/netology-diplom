@@ -4,7 +4,7 @@
   become_user: root
   remote_user: ubuntu
   roles:
-  - nginx_revproxy
+  # - nginx_revproxy
   - node_exporter
   - for_test
 
@@ -58,8 +58,8 @@
   become_user: root
   remote_user: ubuntu
   roles:
+#  - node_exporter
   - grafana
-  - node_exporter
-  - alertmanager
-  - prometheus
-  - for_test
+#  - alertmanager
+#  - prometheus
+#  - for_test
