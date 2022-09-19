@@ -42,31 +42,31 @@ vms = {
   # }
   "gitlab" = {
     local_ip      = "10.0.1.19"
-    cores         = "2"
+    cores         = "4"
     memory        = "4"
     core_fraction = "5"
     hdd           = "15"
     name          = "gitlab"
     hostname      = "gitlab.netology.simonof.info"
   }
-  # "runner" = {
-  #   local_ip      = "10.0.1.20"
-  #   cores         = "2"
-  #   memory        = "4"
-  #   core_fraction = "5"
-  #   hdd           = "10"
-  #   name          = "runner"
-  #   hostname      = "runner.netology.simonof.info"
-  # }
-  "monitoring" = {
-    local_ip      = "10.0.1.21"
+  "runner" = {
+    local_ip      = "10.0.1.20"
     cores         = "2"
     memory        = "4"
     core_fraction = "5"
-    hdd           = "20"
-    name          = "monitoring"
-    hostname      = "monitoring.netology.simonof.info"
+    hdd           = "10"
+    name          = "runner"
+    hostname      = "runner.netology.simonof.info"
   }
+  # "monitoring" = {
+  #   local_ip      = "10.0.1.21"
+  #   cores         = "2"
+  #   memory        = "4"
+  #   core_fraction = "5"
+  #   hdd           = "20"
+  #   name          = "monitoring"
+  #   hostname      = "monitoring.netology.simonof.info"
+  # }
 }
 service_account_key_file = "key.json"
 folder_id                = "b1grdrfc9945t8d1dm4u"

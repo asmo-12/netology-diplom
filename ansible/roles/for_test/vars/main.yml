@@ -1,3 +1,4 @@
 ---
 only_for_testing_packages:
   - mc
+  - htop

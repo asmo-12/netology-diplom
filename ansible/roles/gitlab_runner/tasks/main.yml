@@ -33,25 +33,25 @@
     state: present
     allow_downgrade: true
 
+- name: Create a directory /etc/gitlab-runner and /certs/, if it does not exist
+  file:
+    path: /etc/gitlab-runner/certs/
+    state: directory
+    mode: '0755'
+
 - name: register runner
   block:
     - name: get registration status
       command:
         cmd: gitlab-runner list
       register: gitlab_runner_get_registration_status
-      changed_when: false
-
-    - name: .crt exist ?
-      stat:
-        path: /etc/gitlab-runner/certs/{{ gitlab_domain }}.crt
-      register: crt
 
     - name: copy cert
-      command: >
+      shell: >
         openssl s_client -showcerts -connect {{ gitlab_domain }}:443
         -servername {{ gitlab_domain }} < /dev/null 2>/dev/null | openssl x509
         -outform PEM > /etc/gitlab-runner/certs/{{ gitlab_domain }}.crt
-      when: not crt.stat.exists
+      # when: not crt.stat.exists
 
     - name: register gitlab runner
       command:
