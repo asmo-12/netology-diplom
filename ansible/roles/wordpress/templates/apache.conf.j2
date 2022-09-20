@@ -5,9 +5,10 @@
     DocumentRoot /var/www/{{ http_host }}/wordpress
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-
+    SSLEngine on
+    SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
     <Directory /var/www/{{ http_host }}>
-          SSLEngine on
           Options -Indexes
           AllowOverride All
     </Directory>
