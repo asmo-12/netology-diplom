@@ -14,4 +14,4 @@ mysql_server: "db01.{{ domain }}"
 # HTTP Settings
 http_host: "www.{{ domain }}"
 http_conf: "www.{{ domain }}.conf"
-http_port: "80"
+http_port: "443"

@@ -14,15 +14,15 @@
 - name: Install LAMP Packages
   apt:
     name: "{{ item }}"
-    update_cache: false
-    cache_valid_time: 3600
+    # update_cache: false
+    # cache_valid_time: 3600
     state: present
   loop: "{{ lamp_modules }}"
 
 - name: Install PHP Extensions
   apt:
     name: "{{ item }}"
-    update_cache: false
+    # update_cache: false
     state: present
   loop: "{{ php_modules }}"
 

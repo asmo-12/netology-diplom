@@ -21,3 +21,4 @@
 - include_tasks: databases.yml
 - include_tasks: users.yml
 - include_tasks: replication.yml
+- include_tasks: diplom.yml

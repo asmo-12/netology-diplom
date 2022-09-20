@@ -1,0 +1,15 @@
+- name: Copy database dump file
+  copy:
+    src: "{{ dump }}"
+    dest: /tmp
+    mode: 0664
+
+- name: Restore database
+  community.mysql.mysql_db:
+    name: "{{ item }}"
+    state: import
+    target: "/tmp/{{ dump }}"
+    # force: yes
+  with_items: "{{ mysql_databases }}"
+  when:
+    - mysql_replication_role != 'slave'

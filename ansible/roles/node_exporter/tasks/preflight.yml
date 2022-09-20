@@ -9,8 +9,6 @@
   changed_when: false
   check_mode: false
   register: __systemd_version
-  tags:
-    - skip_ansible_lint
 
 - name: Set systemd version fact
   set_fact:
@@ -56,8 +54,6 @@
     path: "{{ _node_exporter_binary_install_dir }}/node_exporter"
   register: __node_exporter_is_installed
   check_mode: false
-  tags:
-    - node_exporter_install
 
 - name: Gather currently installed node_exporter version (if any)
   command: "{{ _node_exporter_binary_install_dir }}/node_exporter --version"
@@ -67,9 +63,6 @@
   register: __node_exporter_current_version_output
   check_mode: false
   when: __node_exporter_is_installed.stat.exists
-  tags:
-    - node_exporter_install
-    - skip_ansible_lint
 
 - block:
     - name: Get latest release

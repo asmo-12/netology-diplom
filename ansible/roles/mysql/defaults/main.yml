@@ -16,6 +16,8 @@ mysql_user_password_update: true
 
 mysql_enabled_on_startup: true
 
+
+mysql_dump: "dump-wordpress-202209201512.sql.bz2"
 # Whether my.cnf should be updated on every run.
 overwrite_global_mycnf: true
 

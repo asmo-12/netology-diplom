@@ -28,10 +28,10 @@ nginx_revproxy_sites:                                         # List of sites to
     domains:                                                  # List of server_name aliases
       - www.netology.simonof.info
     upstreams:
-      - { backend_address: 10.0.1.16, backend_port: 80 }
-    listen: 80
-    # listen_ssl: 443
-    ssl: false                                                # Set to True if you want to redirect http to https
+      - { backend_address: 10.0.1.16, backend_port: 443 }
+    # listen: 80
+    listen_ssl: 443
+    ssl: true                                                # Set to True if you want to redirect http to https
     hsts_max_age: 63072000                                    # Set HSTS header with max-age defined
     letsencrypt: true                                         # Set to True if you want use letsencrypt
     letsencrypt_email: "asmo12@gmail.com"                                     # Set email for letencrypt cert
