@@ -143,7 +143,7 @@
     owner: grafana
     group: grafana
     mode: 0777
-  
+
 - name: Enable and start Grafana systemd unit
   systemd:
     name: grafana-server

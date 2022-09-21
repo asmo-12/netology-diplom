@@ -39,6 +39,10 @@
     state: directory
     mode: '0755'
 
+- name: is runners_registration_token is set?
+  debug:
+    msg: "{{ gitlab_runner_token }}"
+
 - name: register runner
   block:
     - name: get registration status

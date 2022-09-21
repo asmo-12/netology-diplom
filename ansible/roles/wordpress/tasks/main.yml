@@ -46,6 +46,10 @@
   shell: /usr/sbin/a2enmod rewrite
   notify: reload apache
 
+- name: Enable modules for ssl
+  shell: /usr/sbin/a2enmod ssl socache_shmcb
+  notify: reload apache
+
 - name: Enable new site
   shell: /usr/sbin/a2ensite {{ http_conf }}
   notify: reload apache

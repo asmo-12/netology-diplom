@@ -2,7 +2,8 @@
 # defaults file for gitlab_runner
 
 # These are the setting you need to register a runner.
-gitlab_runner_token: 'cY7j8ScbRzyB14J92pPz'
+# gitlab_runner_token: 'cY7j8ScbRzyB14J92pPz'
+# gitlab_runner_token: ''
 
 # The name as shown in the GitLab webinterface.
 gitlab_runner_name: "{{ ansible_host }}" # ansible_fqdn

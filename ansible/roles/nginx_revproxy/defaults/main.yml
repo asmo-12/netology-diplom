@@ -37,7 +37,7 @@ nginx_revproxy_sites:                                         # List of sites to
     letsencrypt_email: "asmo12@gmail.com"                                     # Set email for letencrypt cert
     client_max_body_size: "2048M"
     proxy_read_timeout: "360"
-    backend_protocol: http
+    backend_protocol: https
 
   gitlab.netology.simonof.info:
     domains:                                                  # List of server_name aliases
