@@ -31,15 +31,15 @@ vms = {
     name          = "db01"
     hostname      = "db01.netology.simonof.info"
   }
-  # "db02" = {
-  #   local_ip      = "10.0.1.18"
-  #   cores         = "2"
-  #   memory        = "2"
-  #   core_fraction = "5"
-  #   hdd           = "10"
-  #   name          = "db02"
-  #   hostname      = "db02.netology.simonof.info"
-  # }
+  "db02" = {
+    local_ip      = "10.0.1.18"
+    cores         = "2"
+    memory        = "2"
+    core_fraction = "5"
+    hdd           = "10"
+    name          = "db02"
+    hostname      = "db02.netology.simonof.info"
+  }
   "gitlab" = {
     local_ip      = "10.0.1.19"
     cores         = "4"
@@ -58,15 +58,15 @@ vms = {
     name          = "runner"
     hostname      = "runner.netology.simonof.info"
   }
-  # "monitoring" = {
-  #   local_ip      = "10.0.1.21"
-  #   cores         = "2"
-  #   memory        = "4"
-  #   core_fraction = "5"
-  #   hdd           = "20"
-  #   name          = "monitoring"
-  #   hostname      = "monitoring.netology.simonof.info"
-  # }
+  "monitoring" = {
+    local_ip      = "10.0.1.21"
+    cores         = "2"
+    memory        = "4"
+    core_fraction = "5"
+    hdd           = "20"
+    name          = "monitoring"
+    hostname      = "monitoring.netology.simonof.info"
+  }
 }
 service_account_key_file = "key.json"
 folder_id                = "b1grdrfc9945t8d1dm4u"

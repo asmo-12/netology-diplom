@@ -78,3 +78,8 @@
     name: gitlab-runner
     state: started
     enabled: true
+
+# - name: Install docker
+#   apt:
+#     name: "docker.io"
+#     state: present

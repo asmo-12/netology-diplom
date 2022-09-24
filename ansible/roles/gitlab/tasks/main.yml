@@ -81,16 +81,16 @@
     mode: 0600
   notify: restart gitlab
 
-- name: obtain registration token
-  command: 'gitlab-rails runner -e production "puts Gitlab::CurrentSettings.current_application_settings.runners_registration_token"'
-  register: runners_registration_token
-  changed_when: false
-  tags:
-    get_token
+# - name: obtain registration token
+#   command: 'gitlab-rails runner -e production "puts Gitlab::CurrentSettings.current_application_settings.runners_registration_token"'
+#   register: runners_registration_token
+#   changed_when: false
+#   tags:
+#     get_token
 
-- name: set gitlab_runner_token
-  when: gitlab_domain is defined and runners_registration_token.rc == 0
-  set_fact:
-    gitlab_runner_token: "{{ runners_registration_token.stdout }}"
-  tags:
-    get_token
+# - name: set gitlab_runner_token
+#   when: gitlab_domain is defined and runners_registration_token.rc == 0
+#   set_fact:
+#     gitlab_runner_token: "{{ runners_registration_token.stdout }}"
+#   tags:
+#     get_token
