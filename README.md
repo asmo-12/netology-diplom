@@ -351,7 +351,7 @@ https://i.imgur.com/r3LPpov.png
   - появится возможность деплоить сертификаты через `ansible.builtin.copy` - `content:`.
   
 Prometheus: "Prometheus supports basic authentication and TLS. This is **experimental** and might change in the future." ( https://prometheus.io/docs/prometheus/latest/configuration/https/ ). Ладно, сказано на https, значит на https...
- C Prometheus, как и с многими другими теперь связана приключенческая история. Сначала он не хотел принимать в prometheus.service опцию `--web.config.file`, выяснилось, что в роли была прописана версия, которая ещё не умела работать по https.  После исправления этого неуспехом заканчивалась проверка `promtool check config web.yml`, пока я таки не перечитал внимательно документацию и не понял, что надо указывать тип конфига, т.е. `promtool check` **web-config** `web.yml`.
+ C Prometheus, как и с многими другими теперь связана приключенческая история. Сначала он не хотел принимать в prometheus.service опцию `--web.config.file`, выяснилось, что в роли была прописана версия, которая ещё не умела работать по https.  После исправления этого неуспехом заканчивалась проверка `promtool check config web.yml`, пока я таки не перечитал внимательно документацию и не понял, что надо указывать тип конфига, т.е. `promtool check`**web-config**`web.yml`.
 
  Итак: Prometheus работает: 
  
@@ -369,7 +369,7 @@ Prometheus: "Prometheus supports basic authentication and TLS. This is **experim
 https://i.vgy.me/Kdv6f4.png  (в момент скриншота работали 3 сервера (из экономии) - они видны в дашборде).
 
 Alertmanager - на его запуск c https ушло чрезмерное количество времени.
-Из неприятных открывшихся секретов - `amtool`, в отличие от `promtool`, не умеет проверять web.config.file.
+Из неприятных открывшихся секретов - `amtool`, в отличие от `promtool`, не умеет проверять `web.config.file`.
 Хотя всё-таки заработал:
 
 ![image](https://user-images.githubusercontent.com/92223664/192101184-27ae181d-92bd-4426-ac47-3577a40ea122.png)
