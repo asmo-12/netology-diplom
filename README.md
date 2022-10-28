@@ -72,6 +72,7 @@ alertmanager.netology IN A      51.250.83.227
 >б. Альтернативный вариант: S3 bucket в созданном YC аккаунте.
 
   Использован рекомендуемый вариант, Terraform Cloud.
+  
 ![image](https://user-images.githubusercontent.com/92223664/192099775-ee39e742-e070-4836-9d33-852e5711862f.png)
 https://i.vgy.me/g0GQbT.png
 
